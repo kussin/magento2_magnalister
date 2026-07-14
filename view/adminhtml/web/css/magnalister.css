@@ -284,6 +284,12 @@ label.ml-error {
     border: 1px solid red !important;
     margin: 0 3px;
 }
+.select2-container.ml-error .select2-selection {
+    border-color: red !important;
+}
+label.ml-error-label {
+    color: red !important;
+}
 span.cp_next {
 	margin-top: -0.5em;
 }
@@ -1890,11 +1896,11 @@ table.attributesTable tr#additionalAttributes > td.input {
 	border-right: 1px solid #747474;
 	padding: 0;
 }
-table.attributesTable .o2k7SkinSilver .mceToolbar,
-table.attributesTable .o2k7SkinSilver .mceStatusbar {
+table.attributesTable .tox .tox-toolbar,
+table.attributesTable .tox .tox-statusbar {
 	border-style: solid none;
 }
-table.attributesTable .o2k7SkinSilver .mceIframeContainer {
+table.attributesTable .tox .tox-edit-area {
 	border-style: none;
 }
 table.attributesTable td input[type="text"], 
@@ -1924,14 +1930,8 @@ table.attributesTable td textarea.blocked.wrong {
 	background-color: #eee5d6;
 	color: #908070;
 }
-table.attributesTable td table span.o2k7Skin iframe {
+table.attributesTable .tox .tox-edit-area__iframe {
 	border: 1px solid #bbb;
-}
-table.attributesTable td table span.o2k7Skin table td.mceIframeContainer {
-	padding: 0 4px 0 2px;
-}
-table.attributesTable td table span.o2k7Skin table.mceToolbar table.mceSplitButton td.mceFirst span {
-	border-top: 1px solid #bbb;
 }
 
 
@@ -2784,8 +2784,8 @@ textarea.apiRequestTime:hover {
 
 /* jqueryui und tinyMCE fixes */
 body.jqueryui .ui-widget-overlay,
-body.magna div#mceModalBlocker { 
-	background: #000; 
+body.magna .tox-dialog-wrap__backdrop {
+	background: #000;
 	opacity: .50;
 	filter:Alpha(Opacity=50);
 }

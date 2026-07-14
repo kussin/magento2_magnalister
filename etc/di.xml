@@ -15,4 +15,11 @@ xsi:type="string">Redgecko\Magnalister\Model\ResourceModel\Order\Grid\Collection
             <argument name="resourceModel" xsi:type="string">Magento\Sales\Model\ResourceModel\Order</argument>
         </arguments>
     </type>
+    <type name="Magento\Framework\Console\CommandList">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="magnalisterAfterupdate" xsi:type="object">Redgecko\Magnalister\Console\Afterupdate</item>
+            </argument>
+        </arguments>
+    </type>
 </config>

@@ -54,6 +54,7 @@ class Index extends Action {
             $debugPrint = '';
             if (file_exists($_PluginPath)) {
                 require_once($_PluginPath);
+                $this->restoreIndividualProgrammings($appPath);
                 $output = ML::gi()->run();
                 $sClientVersion = MLSetting::gi()->get('sClientBuild');
                 $MLCss = '';
@@ -96,7 +97,7 @@ class Index extends Action {
                     $ex->getFile().'<br>'.
                     $ex->getLine().'<pre>'.
                     $ex->getTraceAsString().'</pre>' :
-                    'An error occurs, please contact <a href="http://www.magnalister.com/kontakt" class="ml-js-noBlockUi" target="_blank">magnalister-Service</a>
+                    'An error occurs, please contact <a href="https://www.magnalister.com/kontakt" class="ml-js-noBlockUi" target="_blank">magnalister-Service</a>
                 ').'</body>
             </html>
         ');
@@ -106,6 +107,21 @@ class Index extends Action {
         return ' <!DOCTYPE html>            <html>                <head>                    <meta charset="utf-8">                    <title>magnalister Admin</title>                                       ' . $MLCss . '                    ' . $MLJs . '                </head>                <body class="' . $MLBodyClass . '">                    ' . $output . '                    <pre>' . $debugPrint . '</pre>                 </body>            </html>        ';
 
         //return ' ' . $output . '<pre>' . $debugPrint . '</pre>';
+    }
+
+    /**
+     * This give back the option for individual programmings
+     *  Store them into log folder /var/log/RedMagnalisterSW6/10_Cutomer
+     *      this script will copy it to ML Codepool directory
+     *
+     */
+    private function restoreIndividualProgrammings($appPath) {
+        $_PluginPath = $appPath.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'magnalisterlibrary'.DIRECTORY_SEPARATOR;
+        foreach (array('00_Dev', '10_Customer') as $directory) {
+            if (file_exists(MAGNALISTER_LOG_DIRECTORY.$directory) && !file_exists($_PluginPath.'Codepool'.DIRECTORY_SEPARATOR.$directory)) {
+                \MLHelper::getFilesystemInstance()->cp(MAGNALISTER_LOG_DIRECTORY . $directory, $_PluginPath . 'Codepool' . DIRECTORY_SEPARATOR . $directory);
+            }
+        }
     }
 
     protected function _isAllowed() {

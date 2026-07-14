@@ -14,6 +14,13 @@ class Index extends \Magento\Backend\App\Action
         \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\View\Result\PageFactory $resultPageFactory
     ) {
+        //checking if the magento 2 user have the permissions to access magnalister plugin
+        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+        $authorization = $objectManager->get(\Magento\Framework\AuthorizationInterface::class);
+        if (!$authorization->isAllowed('Redgecko_Magnalister::menu_item')) {
+            throw new \Magento\Framework\Exception\LocalizedException(__('You are not authorized to access magnalister plugin. 
+            Please contact the administrator to provide access in System -> User Roles -> Role Name -> Role Resources'));
+        }
         parent::__construct($context);
         $this->resultPageFactory = $resultPageFactory;
         $this->prepareWritablePaths();
@@ -72,14 +79,14 @@ class Index extends \Magento\Backend\App\Action
         $sLogPath = $directory->getPath('log').DIRECTORY_SEPARATOR.'RedMagnalisterMG2'.DIRECTORY_SEPARATOR;
 
         if (!is_dir($sWritablePath)) {
-            mkdir($sWritablePath);
+            @mkdir($sWritablePath, 0755, true);
         }
         if (is_dir($sWritablePath)) {
             define('MAGNALISTER_WRITABLE_DIRECTORY', $sWritablePath);
         }
 
         if (!is_dir($sLogPath)) {
-            mkdir($sLogPath);
+            @mkdir($sLogPath, 0755, true);
         }
 
         if (is_dir($sLogPath)) {
